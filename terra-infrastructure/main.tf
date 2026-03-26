@@ -5,7 +5,7 @@ locals {
 }
 
 module "vpc" {
-  source                       = "https://github.com/ifediM/Terraform--EKS-Infrastructure.git//vpc"
+  source                       = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//vpc"
   region                       = local.region
   project_name                 = local.project_name
   environment                  = local.environment
@@ -18,7 +18,7 @@ module "vpc" {
 
 # Create Nat-gateways
 module "nat-gateway" {
-  source                     = "https://github.com/ifediM/Terraform--EKS-Infrastructure.git//nat-gateway"
+  source                     = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//nat-gateway"
   project_name               = local.project_name
   environment                = local.environment
   public_subnet_az1_id       = module.vpc.public_subnet_az1_id
@@ -31,7 +31,7 @@ module "nat-gateway" {
 
 #Create Security-group
 module "security-group" {
-  source       = "https://github.com/ifediM/Terraform--EKS-Infrastructure.git//security-group"
+  source       = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//security-group"
   project_name = local.project_name
   environment  = local.environment
   vpc_id       = module.vpc.vpc_id
@@ -42,14 +42,14 @@ module "security-group" {
 
 #Request SSL Certificate
 module "ssl_certificate" {
-  source            = "https://github.com/ifediM/Terraform--EKS-Infrastructure.git//certificate-manager"
+  source            = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//certificate-manager"
   domain_name       = var.domain_name
   alternative_names = var.alternative_names
 }
 
 # Create application load balancer
 module "application_load_balancer" {
-  source                = "https://github.com/ifediM/Terraform--EKS-Infrastructure.git//alb"
+  source                = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//alb"
   project_name          = local.project_name
   environment           = local.environment
   alb_security_group_id = module.security-group.alb_security_group_id
@@ -89,7 +89,7 @@ module "eks" {
 
 # Create record set in route 53
 module "route53" {
-  source                             = "https://github.com/ifediM/Terraform--EKS-Infrastructure.git//route53"
+  source                             = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//route53"
   domain_name                        = module.ssl_certificate.domain_name
   record_name                        = var.record_name
   application_load_balancer_dns_name = module.application_load_balancer.application_load_balancer_dns_name
