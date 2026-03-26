@@ -8,9 +8,23 @@ permissions:
   contents: read # Required to check out repo
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: activate terraform
+        working-directory: /oidc/auth.tf
+        run: terraform init
+
+      - name: terraform apply
+        working-directory: /oidc/auth.tf
+        run: terraform apply  --auto-approve
+
+
+
   oidc:
     runs-on: ubuntu-latest
-
+    needs: setup
+    name: "Configure AWS credentials via OIDC"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4 # https://github.com/actions/checkout
@@ -25,7 +39,7 @@ jobs:
         run: aws s3 ls
 
   terraform:
-    depends-on: oidc
+    needs: oidc
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
