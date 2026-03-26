@@ -43,7 +43,7 @@ resource "aws_iam_role" "github_actions" {
       Effect = "Allow",
       Principal = {
         # Using the dynamic account ID from your data source
-        Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
+        Federated = aws_iam_openid_connect_provider.github_oidc.arn
       },
       Action = "sts:AssumeRoleWithWebIdentity",
       Condition = {
