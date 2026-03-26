@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: activate terraform
-        working-directory: /oidc/auth.tf
+        working-directory: /terra-infrastructure/auth.tf
         run: terraform init
 
       - name: terraform apply
-        working-directory: /oidc/auth.tf
+        working-directory: /terra-infrastructure/auth.tf
         run: terraform apply  --auto-approve
 
 
