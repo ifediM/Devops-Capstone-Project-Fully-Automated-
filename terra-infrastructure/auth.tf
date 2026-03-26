@@ -9,7 +9,7 @@ data "aws_caller_identity" "current" {}
 resource "aws_iam_openid_connect_provider" "github_oidc" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"] # GitHub OIDC cert thumbprint
+  thumbprint_list = ["2b18947a6a9fc7764fd8b5fb18a863b0c6dac24f"] # GitHub OIDC cert thumbprint
 }
 
 # IAM Role for GitHub Actions
@@ -21,7 +21,7 @@ resource "aws_iam_role" "github_actions" {
     Statement = [{
       Effect = "Allow",
       Principal = {
-        Federated = aws_iam_openid_connect_provider.github_oidc.arn
+        Federated = "arn:aws:iam::087097353362:oidc-provider/token.actions.githubusercontent.com"
       },
       Action = "sts:AssumeRoleWithWebIdentity",
       Condition = {
