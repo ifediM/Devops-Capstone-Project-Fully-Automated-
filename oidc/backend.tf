@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     bucket         = "devops-capstone"
-    key            = "terraform_module/qr-code/terraform.tfstate"
+    key            = "backend/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
     use_lockfile   = true
