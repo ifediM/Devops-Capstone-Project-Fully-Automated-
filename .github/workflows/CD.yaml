@@ -25,7 +25,7 @@ jobs:
       - name: Terraform Init
         run: |
           cd terra-infrastructure   
-          terraform iniit              
+          terraform init              
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
