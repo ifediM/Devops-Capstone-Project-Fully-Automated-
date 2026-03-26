@@ -21,11 +21,11 @@ jobs:
           terraform_wrapper: false
 
       - name: activate terraform
-        working-directory: /oidc
+        working-directory: ./oidc
         run: terraform init
 
       - name: terraform apply
-        working-directory: /oidc/auth.tf
+        working-directory: ./oidc/auth.tf
         run: terraform apply  --auto-approve
 
 
