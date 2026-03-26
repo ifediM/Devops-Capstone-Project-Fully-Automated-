@@ -18,6 +18,8 @@ variable "ssh_ip" {}
 variable "domain_name" {}
 variable "alternative_names" {}
 
-#ALB variables
-variable "target_type" {}
+#OIDC variables
+variable "iam_role_name" {}
+variable "github_org" {}
+variable "github_repo" {}
 
