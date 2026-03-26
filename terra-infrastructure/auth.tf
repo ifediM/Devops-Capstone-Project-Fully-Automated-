@@ -48,7 +48,7 @@ resource "aws_iam_role" "github_actions" {
       Action = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         # CRITICAL: AWS usually requires the Audience (aud) to be verified
-        StringEquals = {
+        StringLike = {
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
         },
         # Ensure the repo path is exact (Case Sensitive!)
