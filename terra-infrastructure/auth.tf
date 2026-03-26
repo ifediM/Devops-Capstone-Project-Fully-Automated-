@@ -53,7 +53,7 @@ resource "aws_iam_role" "github_actions" {
         },
         # Ensure the repo path is exact (Case Sensitive!)
         StringLike = {
-          "token.actions.githubusercontent.com:sub": "repo:${var.github_org}/${var.github_repo}:*"
+          "token.actions.githubusercontent.com:sub": "repo:ifediM/Devops-Capstone-Project-Fully-Automated-:*"
         }
       }
     }]
