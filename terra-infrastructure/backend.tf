@@ -4,6 +4,7 @@ terraform {
     bucket         = "devops-capstone"
     key            = "/demo/backend/terraform.tfstate"
     region         = "us-east-1"
+    profile        = "capstone"
     encrypt        = true
     use_lockfile   = true
   }
