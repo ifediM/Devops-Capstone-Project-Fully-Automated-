@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           # Double check that secrets.AWS is just the 12-digit Account ID
-          role-to-assume: arn:aws:iam::087097353362:role/github-actions
+          role-to-assume: arn:aws:iam::${{ secrets.AWS }}:role/github-actions
           aws-region: us-east-1
 
       - name: Terraform Init
