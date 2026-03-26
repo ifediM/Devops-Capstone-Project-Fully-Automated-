@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     bucket         = "devops-capstone"
-    key            = "/demo/backend/terraform.tfstate"
+    key            = "devops-capstone/demo/backend/terraform.tfstate"
     region         = "us-east-1"
     profile        = "capstone"
     encrypt        = true
