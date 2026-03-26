@@ -39,7 +39,7 @@ jobs:
 
 
 
-  terraform deploy:
+  terraform:
     needs: oidc
     name: "Terraform"
     runs-on: ubuntu-latest
