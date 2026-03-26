@@ -21,14 +21,12 @@ jobs:
         with:
           terraform_version: 1.13.3
           terraform_wrapper: false
-
-      - name: Terraform Init
-        run: |
-          cd terra-infrastructure   
-          terraform init              
+         
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
+        run: |
+          cd terra-infrastructure
         with:
           # Double check that secrets.AWS is just the 12-digit Account ID
           role-to-assume: arn:aws:iam::087097353362:role/github-actions
