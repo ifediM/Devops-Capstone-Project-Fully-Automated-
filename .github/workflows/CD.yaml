@@ -11,6 +11,15 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.1
+          terraform_wrapper: false
+
       - name: activate terraform
         working-directory: /terra-infrastructure/auth.tf
         run: terraform init
@@ -38,19 +47,14 @@ jobs:
       - name: Verify AWS access
         run: aws s3 ls
 
+
+
   terraform:
     needs: oidc
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.1
-          terraform_wrapper: false
+      
 
       - name: Terraform Format
         id: fmt
