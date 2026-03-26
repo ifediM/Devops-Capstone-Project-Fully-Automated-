@@ -13,6 +13,27 @@ resource "aws_iam_openid_connect_provider" "github_oidc" {
 }
 
 # IAM Role for GitHub Actions
+#resource "aws_iam_role" "github_actions" {
+#  name = var.iam_role_name
+
+#  assume_role_policy = jsonencode({
+#    Version = "2012-10-17",
+#    Statement = [{
+#      Effect = "Allow",
+#      Principal = {
+#        Federated = "arn:aws:iam::087097353362:oidc-provider/token.actions.githubusercontent.com"
+#      },
+#      Action = "sts:AssumeRoleWithWebIdentity",
+#      Condition = {
+#        StringLike = {
+#          "token.actions.githubusercontent.com:sub" = "repo:${var.github_org}/${var.github_repo}:*"
+#        }
+#      }
+#    }]
+#  })
+#}
+
+# IAM Role for GitHub Actions
 resource "aws_iam_role" "github_actions" {
   name = var.iam_role_name
 
@@ -21,12 +42,18 @@ resource "aws_iam_role" "github_actions" {
     Statement = [{
       Effect = "Allow",
       Principal = {
-        Federated = "arn:aws:iam::087097353362:oidc-provider/token.actions.githubusercontent.com"
+        # Using the dynamic account ID from your data source
+        Federated = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
       },
       Action = "sts:AssumeRoleWithWebIdentity",
       Condition = {
+        # CRITICAL: AWS usually requires the Audience (aud) to be verified
+        StringEquals = {
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        # Ensure the repo path is exact (Case Sensitive!)
         StringLike = {
-          "token.actions.githubusercontent.com:sub" = "repo:${var.github_org}/${var.github_repo}:*"
+          "token.actions.githubusercontent.com:sub": "repo:${var.github_org}/${var.github_repo}:*"
         }
       }
     }]
