@@ -5,7 +5,7 @@ terraform {
     key            = "demo/backend/terraform.tfstate"
     region         = "us-west-2"
     #profile        = "capstone"
-    #encrypt        = true
+    encrypt        = true
     use_lockfile   = true
   }
 }

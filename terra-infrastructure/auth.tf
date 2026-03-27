@@ -36,7 +36,7 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-# --- NEW: S3 Backend Specific Policy ---
+
 resource "aws_iam_role_policy" "s3_backend_access" {
   name = "terraform-s3-backend-permissions"
   role = aws_iam_role.github_actions.id
@@ -45,24 +45,16 @@ resource "aws_iam_role_policy" "s3_backend_access" {
     Version = "2012-10-17"
     Statement = [
       {
-        # Permission to see the bucket and check its region
+        # Permission on the BUCKET itself
         Effect = "Allow"
-        Action = [
-          "s3:ListBucket",
-          "s3:GetBucketLocation"
-        ]
+        Action = ["s3:ListBucket", "s3:GetBucketLocation"]
         Resource = "arn:aws:s3:::devops-capstone"
       },
       {
-        # Permission to read/write/check the state file
+        # Permission on the FILES inside the bucket (note the /*)
         Effect = "Allow"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:DeleteObject",
-          "s3:HeadObject" 
-        ]
-        Resource = "arn:aws:s3:::devops-capstone/demo/backend/terraform.tfstate"
+        Action = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+        Resource = "arn:aws:s3:::devops-capstone/*"
       }
     ]
   })
