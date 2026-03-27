@@ -30,7 +30,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::087097353362:role/github-actions
-          aws-region: us-east-1
+          aws-region: us-west-2
 
       # STEP 2: VERIFY LOGIN (Helpful for debugging)
       - name: Verify AWS Identity

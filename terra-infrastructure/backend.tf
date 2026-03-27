@@ -3,7 +3,7 @@ terraform {
   backend "s3" {
     bucket         = "devops-capstone"
     key            = "devops-capstone/demo/backend/terraform.tfstate"
-    region         = "us-east-1"
+    region         = "us-west-2"
     #profile        = "capstone"
     encrypt        = true
     use_lockfile   = true
