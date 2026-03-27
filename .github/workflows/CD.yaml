@@ -1,10 +1,8 @@
 name: "Devops Capstone - CD"
 
-
 on:
   workflow_dispatch:
 
-# Setting permissions at the top level so all jobs can use OIDC
 permissions:
   id-token: write
   contents: read
@@ -12,6 +10,11 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Set the default directory for ALL steps in this job
+    defaults:
+      run:
+        working-directory: terra-infrastructure
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,18 +25,18 @@ jobs:
           terraform_version: 1.13.3
           terraform_wrapper: false
 
-      - name: Terraform Init
-        run: |
-          cd terra-infrastructure   
-                    
-
+      # STEP 1: LOGIN FIRST
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          # Double check that secrets.AWS is just the 12-digit Account ID
           role-to-assume: arn:aws:iam::087097353362:role/github-actions
           aws-region: us-east-1
 
+      # STEP 2: VERIFY LOGIN (Helpful for debugging)
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
+
+      # STEP 3: INITIALIZE
       - name: Terraform Init
         run: terraform init
 
@@ -42,7 +45,6 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-
 
 
 
