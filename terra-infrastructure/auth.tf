@@ -62,33 +62,7 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-resource "aws_iam_role_policy" "s3_backend_access" {
-  name = "terraform-s3-backend"
-  role = aws_iam_role.github_actions.id
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:ListBucket",
-          "s3:GetBucketLocation"
-        ]
-        Resource = "arn:aws:s3:::devops-capstone"
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:HeadObject" # This is what failed!
-        ]
-        Resource = "arn:aws:s3:::devops-capstone/demo/backend/terraform.tfstate"
-      }
-    ]
-  })
-}
 
 # Attach AWS-managed AdministratorAccess policy to Role
 resource "aws_iam_role_policy_attachment" "attach_github_policy" {
