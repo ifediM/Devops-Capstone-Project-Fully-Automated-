@@ -12,6 +12,8 @@ resource "aws_iam_openid_connect_provider" "github_oidc" {
   thumbprint_list = ["2b18947a6a9fc7764fd8b5fb18a863b0c6dac24f"] # GitHub OIDC cert thumbprint
 }
 
+
+
 # IAM Role for GitHub Actions
 #resource "aws_iam_role" "github_actions" {
 #  name = var.iam_role_name
@@ -57,6 +59,34 @@ resource "aws_iam_role" "github_actions" {
         }
       }
     }]
+  })
+}
+
+resource "aws_iam_role_policy" "s3_backend_access" {
+  name = "terraform-s3-backend"
+  role = aws_iam_role.github_actions.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
+        ]
+        Resource = "arn:aws:s3:::devops-capstone"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:HeadObject" # This is what failed!
+        ]
+        Resource = "arn:aws:s3:::devops-capstone/demo/backend/terraform.tfstate"
+      }
+    ]
   })
 }
 
