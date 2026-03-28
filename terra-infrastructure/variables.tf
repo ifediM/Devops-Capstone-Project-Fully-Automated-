@@ -12,7 +12,7 @@ variable "private_app_subnet_az2_cidr" {}
 
 
 #Security-group variables
-variable "ssh_ip" {}
+#variable "ssh_ip" {}
 
 #Amazon cert manager variables
 variable "domain_name" {}
