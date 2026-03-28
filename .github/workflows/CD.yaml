@@ -1,4 +1,4 @@
-name: "Devops Capstone - CD"
+name: "EKS Deployment - CD"
 
 on:
   workflow_dispatch:
