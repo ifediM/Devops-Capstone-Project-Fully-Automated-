@@ -80,8 +80,8 @@ jobs:
           grep -o '"' terra-infrastructure/terraform.tfvars | wc -l
         # If this returns 0, the quotes are NOT reaching the file.
 
-      #- name: Terraform destroy
-      #  run: terraform destroy -var-file="terraform.tfvars" -auto-approve
+      - name: Terraform destroy
+        run: terraform destroy -var-file="terraform.tfvars" -auto-approve
       - name: Terraform Destroy Old Cluster
         run: |
           terraform destroy -var-file="terraform.tfvars" -target=aws_eks_node_group.node_group -auto-approve
