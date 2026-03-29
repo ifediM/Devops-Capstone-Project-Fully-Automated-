@@ -24,5 +24,8 @@ variable "github_org" {}
 variable "github_repo" {}
 
 
+variable "record_name" {}
+
+
 
 

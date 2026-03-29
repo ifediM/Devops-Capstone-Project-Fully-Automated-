@@ -52,7 +52,7 @@ module "application_load_balancer" {
   source                = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//alb"
   project_name          = local.project_name
   environment           = local.environment
-  alb_security_group_id = module.security-group.alb_security_group_id
+  alb_security_group_id = module.security-group.app_server_security_group_id
   public_subnet_az1_id  = module.vpc.public_subnet_az1_id
   public_subnet_az2_id  = module.vpc.public_subnet_az2_id
   target_type           = var.target_type
