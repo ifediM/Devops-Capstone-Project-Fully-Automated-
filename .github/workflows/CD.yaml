@@ -66,8 +66,21 @@ jobs:
 
       - name: Create tfvars file
         run: |
-          echo "${{ secrets.TFVARS }}" > terraform.tfvars
+          cat <<EOF > terraform.tfvars
+          ${{ secrets.TFVARS }}
+          EOF
+        # If your terraform commands run in a specific directory, 
+        # make sure this file is created there!
+        working-directory: terra-infrastructure  
 
+      - name: Verify tfvars Syntax (Safe Check)
+        run: |
+          echo "Checking for quotes in terraform.tfvars..."
+          # This counts how many double-quotes are in the file
+          grep -o '"' terra-infrastructure/terraform.tfvars | wc -l
+        # If this returns 0, the quotes are NOT reaching the file.
+
+        
       - name: Terraform Plan
         run: terraform plan -var-file="terraform.tfvars"
 
