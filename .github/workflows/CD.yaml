@@ -30,11 +30,9 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::087097353362:role/github-actions
-          aws-region: us-west-2
+          aws-region: us-east-1
 
-      - name: Terraform destroy
-        run: terraform destroy -var-file="terraform.tfvars" -auto-approve    
-
+      
       # STEP 2: VERIFY LOGIN (Helpful for debugging)
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
