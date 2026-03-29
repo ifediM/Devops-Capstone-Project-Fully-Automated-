@@ -43,8 +43,8 @@ jobs:
             echo "Bucket does not exist. Creating..."
             aws s3api create-bucket \
               --bucket devops-capstone-ifedi \
-              --region us-west-2 \
-              --create-bucket-configuration LocationConstraint=us-east-1
+              --region us-east-1 || echo "Bucket already exists"
+              #--create-bucket-configuration LocationConstraint=us-east-1
             
             # Enable Versioning (Best Practice for State)
             aws s3api put-bucket-versioning \
