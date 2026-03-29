@@ -54,7 +54,7 @@ jobs:
             # Block Public Access
             aws s3api put-public-access-block \
               --bucket devops-capstone-ifedi \
-              --public-access-block-configuration "BlockPublicAcl=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+              --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
           else
             echo "Bucket already exists."
           fi  
