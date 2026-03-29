@@ -39,7 +39,7 @@ jobs:
       - name: Bootstrap S3 Backend
         run: |
           # Create the bucket if it doesn't exist
-          if ! aws s3api head-bucket --bucket devops-capstone 2>/dev/null; then
+          if ! aws s3api head-bucket --bucket devops-capstone-ifedi 2>/dev/null; then
             echo "Bucket does not exist. Creating..."
             aws s3api create-bucket \
               --bucket devops-capstone \

@@ -1,7 +1,7 @@
 # store the terraform state file in s3 and lock with dynamodb
 terraform {
   backend "s3" {
-    bucket         = "devops-capstone"
+    bucket         = "devops-capstone-ifedi"
     key            = "demo/backend/terraform.tfstate"
     region         = "us-west-2"
     #profile        = "capstone"
