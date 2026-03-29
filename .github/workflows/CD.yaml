@@ -59,15 +59,20 @@ jobs:
             echo "Bucket already exists."
           fi  
 
-      # STEP 3: INITIALIZE
-      - name: Terraform Init
-        run: terraform init
+
+      # STEP 3: INITIALIZE AND APPLY
+      - name: Create tfvars file
+        run: |
+          echo "${{ secrets.TFVARS }}" > terra-infrastructure/terraform.tfvars
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var-file="terraform.tfvars"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var-file="terraform.tfvars"    
+
+      
+      
 
 
 
