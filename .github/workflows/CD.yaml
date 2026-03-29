@@ -81,7 +81,7 @@ jobs:
         # If this returns 0, the quotes are NOT reaching the file.
 
       - name: Terraform destroy
-        run: terraform destroy  
+        run: terraform destroy -var-file="terraform.tfvars" -auto-approve
       #- name: Terraform Plan
       #  run: terraform plan -var-file="terraform.tfvars"
 
