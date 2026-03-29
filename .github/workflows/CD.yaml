@@ -38,26 +38,24 @@ jobs:
 
       - name: Bootstrap S3 Backend
         run: |
-          # Create the bucket if it doesn't exist
-          if ! aws s3api head-bucket --bucket devops-capstone-ifedi 2>/dev/null; then
+          BUCKET="devops-capstone-ifedi"
+          if ! aws s3api head-bucket --bucket $BUCKET 2>/dev/null; then
             echo "Bucket does not exist. Creating..."
-            aws s3api create-bucket \
-              --bucket devops-capstone-ifedi \
-              --region us-east-1 || echo "Bucket already exists"
-              
+            aws s3api create-bucket --bucket $BUCKET --region us-east-1
             
-            # Enable Versioning (Best Practice for State)
+            # 10-second pause to let AWS internal systems sync
+            sleep 10
+            
             aws s3api put-bucket-versioning \
-              --bucket devops-capstone-ifedi \
+              --bucket $BUCKET \
               --versioning-configuration Status=Enabled
               
-            # Block Public Access
             aws s3api put-public-access-block \
-              --bucket devops-capstone-ifedi \
+              --bucket $BUCKET \
               --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
           else
             echo "Bucket already exists."
-          fi  
+          fi
 
 
       # STEP 3: INITIALIZE AND APPLY
