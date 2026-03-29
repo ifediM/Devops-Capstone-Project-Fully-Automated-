@@ -80,12 +80,13 @@ jobs:
           grep -o '"' terra-infrastructure/terraform.tfvars | wc -l
         # If this returns 0, the quotes are NOT reaching the file.
 
-        
-      - name: Terraform Plan
-        run: terraform plan -var-file="terraform.tfvars"
+      - name: Terraform destroy
+        run: terraform destroy  
+      #- name: Terraform Plan
+      #  run: terraform plan -var-file="terraform.tfvars"
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -var-file="terraform.tfvars"    
+      #- name: Terraform Apply
+      #  run: terraform apply -auto-approve -var-file="terraform.tfvars"    
 
       
      
