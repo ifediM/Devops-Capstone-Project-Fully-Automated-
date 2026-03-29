@@ -63,7 +63,7 @@ jobs:
       # STEP 3: INITIALIZE AND APPLY
       - name: Create tfvars file
         run: |
-          echo "${{ secrets.TFVARS }}" > terra-infrastructure/terraform.tfvars
+          echo "${{ secrets.TFVARS }}" > terraform.tfvars
 
       - name: Terraform Plan
         run: terraform plan -var-file="terraform.tfvars"
