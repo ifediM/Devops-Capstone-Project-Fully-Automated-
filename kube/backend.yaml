@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: qr-api
-        image: ifedi/devops-qr-code-backend:latest
+        image: ifedim/devops-qr-code-backend:latest
         ports:
         - containerPort: 80
 
