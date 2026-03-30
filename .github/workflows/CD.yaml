@@ -82,11 +82,11 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -var-file="terraform.tfvars"
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -var-file="terraform.tfvars"      
+      #- name: Terraform Apply
+      #  run: terraform apply -auto-approve -var-file="terraform.tfvars"      
 
-      #- name: Terraform destroy
-      #  run: terraform destroy -var-file="terraform.tfvars" -auto-approve
+      - name: Terraform destroy
+        run: terraform destroy -var-file="terraform.tfvars" -auto-approve
       #- name: Terraform Destroy Old Cluster
       #  run: |
       #    terraform destroy -var-file="terraform.tfvars" -target=aws_eks_node_group.node_group -auto-approve
