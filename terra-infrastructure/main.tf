@@ -34,7 +34,7 @@ module "security-group" {
   project_name = local.project_name
   environment  = local.environment
   vpc_id       = module.vpc.vpc_id
-  ssh_ip       = var.ssh_ip
+  vpc_cidr     = module.vpc.vpc_cidr
 }
 
 
