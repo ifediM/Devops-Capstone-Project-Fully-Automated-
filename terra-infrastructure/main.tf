@@ -66,7 +66,7 @@ module "eks" {
   version = "~> 20.0"
 
   cluster_name    = "devops-capstone-project"
-  cluster_version = "1.31"
+  cluster_version = "1.33"
 
   cluster_endpoint_public_access = true
 
