@@ -5,27 +5,27 @@ locals {
 }
 
 module "vpc" {
-  source                       = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//vpc"
-  region                       = local.region
-  project_name                 = local.project_name
-  environment                  = local.environment
-  vpc_cidr                     = var.vpc_cidr
-  public_subnet_az1_cidr       = var.public_subnet_az1_cidr
-  public_subnet_az2_cidr       = var.public_subnet_az2_cidr
-  private_app_subnet_az1_cidr  = var.private_app_subnet_az1_cidr
-  private_app_subnet_az2_cidr  = var.private_app_subnet_az2_cidr
- }
+  source                      = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//vpc"
+  region                      = local.region
+  project_name                = local.project_name
+  environment                 = local.environment
+  vpc_cidr                    = var.vpc_cidr
+  public_subnet_az1_cidr      = var.public_subnet_az1_cidr
+  public_subnet_az2_cidr      = var.public_subnet_az2_cidr
+  private_app_subnet_az1_cidr = var.private_app_subnet_az1_cidr
+  private_app_subnet_az2_cidr = var.private_app_subnet_az2_cidr
+}
 
 # Create Nat-gateways
 module "nat-gateway" {
-  source                     = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//nat-gateway"
-  project_name               = local.project_name
-  environment                = local.environment
-  public_subnet_az1_id       = module.vpc.public_subnet_az1_id
-  internet_gateway           = module.vpc.internet_gateway
-  vpc_id                     = module.vpc.vpc_id
-  private_app_subnet_az1_id  = module.vpc.private_app_subnet_az1_id
-  private_app_subnet_az2_id  = module.vpc.private_app_subnet_az2_id
+  source                    = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//nat-gateway"
+  project_name              = local.project_name
+  environment               = local.environment
+  public_subnet_az1_id      = module.vpc.public_subnet_az1_id
+  internet_gateway          = module.vpc.internet_gateway
+  vpc_id                    = module.vpc.vpc_id
+  private_app_subnet_az1_id = module.vpc.private_app_subnet_az1_id
+  private_app_subnet_az2_id = module.vpc.private_app_subnet_az2_id
 }
 
 #Create Security-group
@@ -48,15 +48,15 @@ module "ssl_certificate" {
 
 # Create application load balancer
 module "application_load_balancer" {
-  source                = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//alb"
-  project_name          = local.project_name
-  environment           = local.environment
+  source                       = "git::https://github.com/ifediM/Terraform--EKS-Infrastructure.git//alb"
+  project_name                 = local.project_name
+  environment                  = local.environment
   app_server_security_group_id = module.security-group.app_server_security_group_id
-  public_subnet_az1_id  = module.vpc.public_subnet_az1_id
-  public_subnet_az2_id  = module.vpc.public_subnet_az2_id
-  target_type           = var.target_type
-  vpc_id                = module.vpc.vpc_id
-  certificate_arn       = module.ssl_certificate.certificate_arn
+  public_subnet_az1_id         = module.vpc.public_subnet_az1_id
+  public_subnet_az2_id         = module.vpc.public_subnet_az2_id
+  target_type                  = var.target_type
+  vpc_id                       = module.vpc.vpc_id
+  certificate_arn              = module.ssl_certificate.certificate_arn
 }
 
 
