@@ -70,7 +70,7 @@ module "eks" {
 
   # 1. Ensure Public Access is open for your Jumpbox/Actions
   cluster_endpoint_public_access       = true
-  cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"] 
+  cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
 
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = [module.vpc.public_subnet_az1_id, module.vpc.public_subnet_az2_id]
@@ -86,7 +86,7 @@ module "eks" {
   access_entries = {
     # This allows your Ubuntu user to authenticate
     ubuntu_admin = {
-      principal_arn     = var.user_arn # <-- Replace with the ARN of the user you want to have admin access
+      principal_arn = var.user_arn # <-- Replace with the ARN of the user you want to have admin access
       policy_associations = {
         admin = {
           policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterAdminPolicy"
