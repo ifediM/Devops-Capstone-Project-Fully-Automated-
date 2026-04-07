@@ -4,7 +4,7 @@ terraform {
     bucket = "devops-capstone-ifedi"
     key    = "demo/backend/terraform.tfstate"
     region = "us-east-1"
-    profile        = "capstone"
+    #profile        = "capstone"
     encrypt      = true
     use_lockfile = true
   }
