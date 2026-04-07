@@ -86,7 +86,7 @@ module "eks" {
   access_entries = {
     # This allows your Ubuntu user to authenticate
     ubuntu_admin = {
-      principal_arn = var.user_arn # <-- Replace with the ARN of the user you want to have admin access
+      principal_arn = ":arn:aws:iam::087097353362:user/root" # <-- Replace with the ARN of the user you want to have admin access
       policy_associations = {
         admin = {
           policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterAdminPolicy"
