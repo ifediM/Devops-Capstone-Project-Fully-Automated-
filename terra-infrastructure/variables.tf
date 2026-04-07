@@ -27,6 +27,8 @@ variable "github_repo" {}
 variable "record_name" {}
 variable "target_type" {}
 
+variable "user_arn" {}
+
 
 
 

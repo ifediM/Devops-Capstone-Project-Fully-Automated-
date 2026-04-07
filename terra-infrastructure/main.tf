@@ -68,11 +68,35 @@ module "eks" {
   cluster_name    = "devops-capstone-project"
   cluster_version = "1.33"
 
-  cluster_endpoint_public_access = true
+  # 1. Ensure Public Access is open for your Jumpbox/Actions
+  cluster_endpoint_public_access       = true
+  cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"] 
 
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = [module.vpc.public_subnet_az1_id, module.vpc.public_subnet_az2_id]
   control_plane_subnet_ids = [module.vpc.public_subnet_az1_id, module.vpc.public_subnet_az2_id]
+
+  # 2. Authentication Strategy
+  # This enables the new "API" based access instead of the old configmap
+  authentication_mode = "API_AND_CONFIG_MAP"
+
+  # Automatically give the person running Terraform admin rights
+  enable_cluster_creator_admin_permissions = true
+
+  access_entries = {
+    # This allows your Ubuntu user to authenticate
+    ubuntu_admin = {
+      principal_arn     = var.user_arn # <-- Replace with the ARN of the user you want to have admin access
+      policy_associations = {
+        admin = {
+          policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
+  }
 
   eks_managed_node_groups = {
     green = {
@@ -83,7 +107,6 @@ module "eks" {
     }
   }
 }
-
 
 
 # Create record set in route 53
