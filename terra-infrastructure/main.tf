@@ -89,7 +89,7 @@ module "eks" {
       principal_arn = var.user_arn # <-- Replace with the ARN of the user you want to have admin access
       policy_associations = {
         admin = {
-          policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterAdminPolicy"
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
           access_scope = {
             type = "cluster"
           }
