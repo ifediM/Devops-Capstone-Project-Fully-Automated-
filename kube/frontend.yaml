@@ -13,10 +13,11 @@ spec:
         app: qr-frontend
     spec:
       containers:
-        - name: qr-frontend
-          image: ifedim/devops-qr-code-frontend:latest
-          ports:
-            - containerPort: 3000
+      - name: qr-frontend
+        image: ifedim/frontend:latest
+        ports:
+        - containerPort: 3000
+
 ---
 apiVersion: v1
 kind: Service
