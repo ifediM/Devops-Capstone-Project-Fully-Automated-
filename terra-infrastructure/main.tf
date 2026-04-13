@@ -59,6 +59,37 @@ module "application_load_balancer" {
   certificate_arn              = module.ssl_certificate.certificate_arn
 }
 
+resource "aws_s3_bucket" "qrcode_bucket" {
+  bucket = "qrcode-storage-devops-capstone" # Must match your Python code
+}
+
+# 1. Disable "Block Public Access" so the ACL can work
+resource "aws_s3_bucket_public_access_block" "allow_public" {
+  bucket = aws_s3_bucket.qrcode_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+# 2. Enable ACLs on the bucket
+resource "aws_s3_bucket_ownership_controls" "acl_ownership" {
+  bucket = aws_s3_bucket.qrcode_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "qrcode_bucket_acl" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.acl_ownership,
+    aws_s3_bucket_public_access_block.allow_public,
+  ]
+  bucket = aws_s3_bucket.qrcode_bucket.id
+  acl    = "public-read"
+}
+
 
 
 module "eks" {
